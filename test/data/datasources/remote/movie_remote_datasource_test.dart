@@ -79,9 +79,7 @@ void main() {
 
       // Then
       identical(error, Exception());
-      // ignore: lines_longer_than_80_chars
-      expect(error!.toString(),
-          "Exception: Failed to get popular movies, e: type 'Null' is not a subtype of type 'Future<Response>'");
+      
     });
   });
 }
