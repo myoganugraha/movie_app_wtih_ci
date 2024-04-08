@@ -30,7 +30,7 @@ void main() {
         // Then
         expect(movies.first.id, 1);
         expect(movies.first.title, 'title');
-      verify(() => mockMovieRepositoryImpl.getPopularMovies()).called(1);
+        verify(() => mockMovieRepositoryImpl.getPopularMovies()).called(1);
       });
     });
   });

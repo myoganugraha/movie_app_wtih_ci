@@ -17,5 +17,5 @@ void main() {
       expect(title, data.title);
       expect(overview, data.overview);
     });
-   });
+  });
 }

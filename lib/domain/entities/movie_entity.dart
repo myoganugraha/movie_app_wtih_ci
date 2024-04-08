@@ -1,5 +1,4 @@
 class MovieEntity {
-
   MovieEntity({
     required this.id,
     required this.title,
@@ -16,7 +15,7 @@ class MovieEntity {
     required this.voteAverage,
     required this.voteCount,
   });
-  
+
   final int id;
   final String title;
   final String overview;
