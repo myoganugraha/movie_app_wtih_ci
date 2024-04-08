@@ -58,5 +58,29 @@ void main() {
         expect(movies.length, 1);
       });
     });
+
+    test(
+        'should throw error '
+        'when failed calling the endpoint.', () async {
+      // Given
+      Exception? error;
+      when(
+        () => mockClient.get(
+          any(),
+        ),
+      ).thenThrow((_) async => '');
+
+      // When
+      try {
+        await movieRemoteDatasource.getPopularMovies();
+      } catch (e) {
+        error = e as Exception;
+      }
+
+      // Then
+      identical(error, Exception());
+      // ignore: lines_longer_than_80_chars
+      expect(error!.toString(), "Exception: Failed to get popular movies, e: type 'Null' is not a subtype of type 'Future<Response>'");
+    });
   });
 }

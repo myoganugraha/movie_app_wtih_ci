@@ -7,8 +7,8 @@ import 'package:movie_app_with_ci/domain/usecases/movie_usecase.dart';
 import 'package:movie_app_with_ci/presentation/dashboard/cubit/dashboard_cubit.dart';
 
 void main() {
-  late final MovieUsecase mockMovieUsecase;
-  late final DashboardCubit dashboardCubit;
+  late MovieUsecase mockMovieUsecase;
+  late DashboardCubit dashboardCubit;
 
   setUp(() {
     mockMovieUsecase = MockMovieUsecase();
@@ -16,12 +16,18 @@ void main() {
   });
 
   tearDown(() {
-    dashboardCubit.close();
-    reset(mockMovieUsecase);
-    clearInteractions(mockMovieUsecase);
+    try {
+      verifyNoMoreInteractions(mockMovieUsecase);
+    } catch (e) {
+      rethrow;
+    } finally {
+      dashboardCubit.close();
+      reset(mockMovieUsecase);
+      resetMocktailState();
+    }
   });
 
-  group('Dashboard Cubit', () {
+  group('Dashboard Cubit -', () {
     final mockMovieListEntity = [mockMovieEntity];
 
     blocTest<DashboardCubit, DashboardState>(
@@ -30,11 +36,28 @@ void main() {
       'and movie usecase is called.',
       setUp: () => when(() => mockMovieUsecase.getPopularMovies())
           .thenAnswer((_) async => mockMovieListEntity),
-      build: () => dashboardCubit,
+      build: () => DashboardCubit(movieUsecase: mockMovieUsecase),
       act: (cubit) => cubit.getPopularMovies(),
       expect: () => [
         isA<FetchMoviesOnLoading>(),
         isA<FetchMoviesOnSuccess>(),
+      ],
+      verify: (_) async {
+        verify(() => mockMovieUsecase.getPopularMovies()).called(1);
+      },
+    );
+
+    blocTest<DashboardCubit, DashboardState>(
+      'emits [FetchMoviesOnLoading, FetchMoviesOnError] when '
+      'getPopularMovies() caught exception '
+      'and movie usecase is called.',
+      setUp: () => when(() => mockMovieUsecase.getPopularMovies())
+          .thenThrow((_) async => Exception()),
+      build: () => DashboardCubit(movieUsecase: mockMovieUsecase),
+      act: (cubit) => cubit.getPopularMovies(),
+      expect: () => [
+        isA<FetchMoviesOnLoading>(),
+        isA<FetchMoviesOnError>(),
       ],
       verify: (_) async {
         verify(() => mockMovieUsecase.getPopularMovies()).called(1);

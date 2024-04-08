@@ -3,7 +3,7 @@ import 'package:movie_app_with_ci/data/models/__mocks__/movie_model_mock.dart';
 import 'package:movie_app_with_ci/data/models/movie_model.dart';
 
 void main() {
-  group('Movie Model -', () { 
+  group('Movie Model -', () {
     test('should parsed correctly', () {
       // Given
       const mockJson = mockMovieJson;
@@ -19,7 +19,7 @@ void main() {
     });
   });
 
-  group('Movie Model List -', () { 
+  group('Movie Model List -', () {
     test('should parsed correctly', () {
       // Given
       const mockJson = mockMovieListJson;
@@ -32,6 +32,23 @@ void main() {
       expect(data.first.adult, false);
       expect(data.first.id, 823464);
       expect(data.first.genreIds.length, 4);
+    });
+
+    test(
+        'should throw Exception(Failed to parse json list) '
+        'when given invalid json schema', () {
+      // Given
+      dynamic error;
+
+      // When
+      try {
+        MovieModel.fromJsonList(mockMovieJson);
+      } catch (e) {
+        error = e;
+      }
+
+      // Then
+      identical(error, Exception('Failed to parse json list'));
     });
   });
 }
