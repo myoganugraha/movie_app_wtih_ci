@@ -41,6 +41,7 @@ version
 .packages.generated
 
 # Flutter/Dart/Pub related
+*.g.dart
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -55,6 +56,7 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 .fvm/
+
 
 # Android related
 **/android/**/gradle-wrapper.jar
