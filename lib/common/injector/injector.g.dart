@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: omit_local_variable_types, cascade_invocations
+
 part of 'injector.dart';
 
 // **************************************************************************
