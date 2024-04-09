@@ -24,14 +24,18 @@ class _$Injector extends Injector {
   @override
   void _configureRepository() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton<MovieRepository>((c) =>
-        MovieRepositoryImpl(movieRemoteDatasource: c<MovieRemoteDatasource>()));
+    container.registerSingleton<MovieRepository>(
+      (c) => MovieRepositoryImpl(
+        movieRemoteDatasource: c<MovieRemoteDatasource>(),
+      ),
+    );
   }
 
   @override
   void _configureUsecase() {
     final KiwiContainer container = KiwiContainer();
     container.registerSingleton(
-        (c) => MovieUsecase(movieRepository: c<MovieRepository>()));
+      (c) => MovieUsecase(movieRepository: c<MovieRepository>()),
+    );
   }
 }
