@@ -79,7 +79,6 @@ void main() {
 
       // Then
       identical(error, Exception());
-      
     });
   });
 }
