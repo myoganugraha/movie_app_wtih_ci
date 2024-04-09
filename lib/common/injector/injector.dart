@@ -45,5 +45,4 @@ abstract class Injector {
   // ============ USECASE ============
   @Register.singleton(MovieUsecase)
   void _configureUsecase();
-
 }
