@@ -3,12 +3,12 @@ import 'package:meta/meta.dart';
 import 'package:movie_app_with_ci/domain/entities/movie_entity.dart';
 import 'package:movie_app_with_ci/domain/usecases/movie_usecase.dart';
 
-part 'dashboard_state.dart';
+part 'home_state.dart';
 
-class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit({
+class HomeCubit extends Cubit<HomeState> {
+  HomeCubit({
     required this.movieUsecase,
-  }) : super(DashboardInitial());
+  }) : super(HomeInitial());
 
   final MovieUsecase movieUsecase;
 

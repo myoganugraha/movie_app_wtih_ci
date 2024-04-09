@@ -4,15 +4,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:movie_app_with_ci/domain/entities/__mocks__/movie_entity_mock.dart';
 import 'package:movie_app_with_ci/domain/usecases/__mocks__/movie_usecase_mock.dart';
 import 'package:movie_app_with_ci/domain/usecases/movie_usecase.dart';
-import 'package:movie_app_with_ci/presentation/dashboard/cubit/dashboard_cubit.dart';
+import 'package:movie_app_with_ci/presentation/home/cubit/home_cubit.dart';
 
 void main() {
   late MovieUsecase mockMovieUsecase;
-  late DashboardCubit dashboardCubit;
+  late HomeCubit homeCubit;
 
   setUp(() {
     mockMovieUsecase = MockMovieUsecase();
-    dashboardCubit = DashboardCubit(movieUsecase: mockMovieUsecase);
+    homeCubit = HomeCubit(movieUsecase: mockMovieUsecase);
   });
 
   tearDown(() {
@@ -21,22 +21,22 @@ void main() {
     } catch (e) {
       rethrow;
     } finally {
-      dashboardCubit.close();
+      homeCubit.close();
       reset(mockMovieUsecase);
       resetMocktailState();
     }
   });
 
-  group('Dashboard Cubit -', () {
+  group('Home Cubit -', () {
     final mockMovieListEntity = [mockMovieEntity];
 
-    blocTest<DashboardCubit, DashboardState>(
+    blocTest<HomeCubit, HomeState>(
       'emits [FetchMoviesOnLoading, FetchMoviesOnSuccess] when '
       'getPopularMovies() return valid data '
       'and movie usecase is called.',
       setUp: () => when(() => mockMovieUsecase.getPopularMovies())
           .thenAnswer((_) async => mockMovieListEntity),
-      build: () => DashboardCubit(movieUsecase: mockMovieUsecase),
+      build: () => homeCubit,
       act: (cubit) => cubit.getPopularMovies(),
       expect: () => [
         isA<FetchMoviesOnLoading>(),
@@ -47,13 +47,13 @@ void main() {
       },
     );
 
-    blocTest<DashboardCubit, DashboardState>(
+    blocTest<HomeCubit, HomeState>(
       'emits [FetchMoviesOnLoading, FetchMoviesOnError] when '
       'getPopularMovies() caught exception '
       'and movie usecase is called.',
       setUp: () => when(() => mockMovieUsecase.getPopularMovies())
           .thenThrow((_) async => Exception()),
-      build: () => DashboardCubit(movieUsecase: mockMovieUsecase),
+      build: () => homeCubit,
       act: (cubit) => cubit.getPopularMovies(),
       expect: () => [
         isA<FetchMoviesOnLoading>(),
